@@ -99,23 +99,23 @@ public static class DbAttributes
     public const string AttributeDbCosmosdbSubStatusCode = "db.cosmosdb.sub_status_code";
 
     /// <summary>
-    /// Represents the identifier of an Elasticsearch cluster.
+    /// Represents the identifier of an OpenSearch clientcluster.
     /// </summary>
-    public const string AttributeDbElasticsearchClusterName = "db.elasticsearch.cluster.name";
+    public const string AttributeDbElasticsearchClusterName = "db.opensearch.cluster.name";
 
     /// <summary>
     /// Deprecated, use <c>db.instance.id</c> instead.
     /// </summary>
     [Obsolete("Replaced by `db.instance.id`")]
-    public const string AttributeDbElasticsearchNodeName = "db.elasticsearch.node.name";
+    public const string AttributeDbElasticsearchNodeName = "db.opensearch.node.name";
 
     /// <summary>
     /// A dynamic value in the url path.
     /// </summary>
     /// <remarks>
-    /// Many Elasticsearch url paths allow dynamic values. These SHOULD be recorded in span attributes in the format <c>db.elasticsearch.path_parts.&lt;key&gt;</c>, where <c>&lt;key&gt;</c> is the url path part name. The implementation SHOULD reference the <a href="https://raw.githubusercontent.com/elastic/elasticsearch-specification/main/output/schema/schema.json">elasticsearch schema</a> in order to map the path part values to their names.
+    /// Many OpenSearch clienturl paths allow dynamic values. These SHOULD be recorded in span attributes in the format <c>db.opensearch.path_parts.&lt;key&gt;</c>, where <c>&lt;key&gt;</c> is the url path part name. The implementation SHOULD reference the <a href="https://raw.githubusercontent.com/elastic/opensearch-specification/main/output/schema/schema.json">OpenSearch clientschema</a> in order to map the path part values to their names.
     /// </remarks>
-    public const string AttributeDbElasticsearchPathParts = "db.elasticsearch.path_parts";
+    public const string AttributeDbElasticsearchPathParts = "db.opensearch.path_parts";
 
     /// <summary>
     /// An identifier (address, unique name, or any other identifier) of the database instance that is executing queries or mutations on the current connection. This is useful in cases where the database is running in a clustered environment and the instrumentation is able to record the node executing the query. The client may obtain this value in databases like MySQL using queries like <c>select @@hostname</c>.
@@ -574,9 +574,9 @@ public static class DbAttributes
         public const string Geode = "geode";
 
         /// <summary>
-        /// Elasticsearch.
+        /// opensearch.
         /// </summary>
-        public const string Elasticsearch = "elasticsearch";
+        public const string OpenSearch client= "opensearch";
 
         /// <summary>
         /// Memcached.
@@ -591,7 +591,7 @@ public static class DbAttributes
         /// <summary>
         /// OpenSearch.
         /// </summary>
-        public const string Opensearch = "opensearch";
+        public const string OpenSearch client= "opensearch";
 
         /// <summary>
         /// ClickHouse.

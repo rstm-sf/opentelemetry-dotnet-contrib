@@ -7,7 +7,7 @@ using OpenTelemetry.Instrumentation.ElasticsearchClient.Implementation;
 namespace OpenTelemetry.Instrumentation.ElasticsearchClient;
 
 /// <summary>
-/// Elasticsearch client instrumentation.
+/// OpenSearch client instrumentation.
 /// </summary>
 internal class ElasticsearchClientInstrumentation : IDisposable
 {
@@ -16,7 +16,7 @@ internal class ElasticsearchClientInstrumentation : IDisposable
     /// <summary>
     /// Initializes a new instance of the <see cref="ElasticsearchClientInstrumentation"/> class.
     /// </summary>
-    /// <param name="options">Configuration options for Elasticsearch client instrumentation.</param>
+    /// <param name="options">Configuration options for OpenSearch client instrumentation.</param>
     public ElasticsearchClientInstrumentation(ElasticsearchClientInstrumentationOptions options)
     {
         this.diagnosticSourceSubscriber = new DiagnosticSourceSubscriber(new ElasticsearchRequestPipelineDiagnosticListener(options), null, ElasticsearchInstrumentationEventSource.Log.UnknownErrorProcessingEvent);

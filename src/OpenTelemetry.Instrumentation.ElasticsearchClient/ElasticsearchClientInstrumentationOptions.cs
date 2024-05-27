@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace OpenTelemetry.Instrumentation.ElasticsearchClient;
 
 /// <summary>
-/// Options for Elasticsearch client instrumentation.
+/// Options for OpenSearch client instrumentation.
 /// </summary>
 public class ElasticsearchClientInstrumentationOptions
 {

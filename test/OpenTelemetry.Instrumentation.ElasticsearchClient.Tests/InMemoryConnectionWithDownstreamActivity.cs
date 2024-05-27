@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using OpenSearch.Net;
 
 namespace OpenTelemetry.Instrumentation.ElasticsearchClient.Tests;
 

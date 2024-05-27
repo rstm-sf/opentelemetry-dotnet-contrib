@@ -10,7 +10,7 @@ namespace OpenTelemetry.Instrumentation.ElasticsearchClient.Implementation;
 /// <summary>
 /// EventSource events emitted from the project.
 /// </summary>
-[EventSource(Name = "OpenTelemetry-Instrumentation-Elasticsearch")]
+[EventSource(Name = "OpenTelemetry-Instrumentation-OpenSearch")]
 internal class ElasticsearchInstrumentationEventSource : EventSource
 {
     public static ElasticsearchInstrumentationEventSource Log = new();

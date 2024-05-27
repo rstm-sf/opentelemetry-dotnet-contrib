@@ -16,7 +16,7 @@ namespace OpenTelemetry.Trace;
 public static class TracerProviderBuilderExtensions
 {
     /// <summary>
-    /// Enables Elasticsearch client Instrumentation.
+    /// Enables OpenSearch client Instrumentation.
     /// </summary>
     /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
@@ -25,10 +25,10 @@ public static class TracerProviderBuilderExtensions
         AddElasticsearchClientInstrumentation(builder, name: null, configure: null);
 
     /// <summary>
-    /// Enables Elasticsearch client Instrumentation.
+    /// Enables OpenSearch client Instrumentation.
     /// </summary>
     /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
-    /// <param name="configure">Elasticsearch client configuration options.</param>
+    /// <param name="configure">OpenSearch client configuration options.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
     public static TracerProviderBuilder AddElasticsearchClientInstrumentation(
         this TracerProviderBuilder builder,
@@ -36,11 +36,11 @@ public static class TracerProviderBuilderExtensions
         AddElasticsearchClientInstrumentation(builder, name: null, configure);
 
     /// <summary>
-    /// Enables Elasticsearch client Instrumentation.
+    /// Enables OpenSearch client Instrumentation.
     /// </summary>
     /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
     /// <param name="name">Name which is used when retrieving options.</param>
-    /// <param name="configure">Elasticsearch client configuration options.</param>
+    /// <param name="configure">OpenSearch client configuration options.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
     public static TracerProviderBuilder AddElasticsearchClientInstrumentation(
         this TracerProviderBuilder builder,
@@ -63,7 +63,7 @@ public static class TracerProviderBuilderExtensions
         });
 
         builder.AddSource(ElasticsearchRequestPipelineDiagnosticListener.ActivitySourceName);
-        builder.AddLegacySource("CallElasticsearch");
+        builder.AddLegacySource("CallOpenSearch");
 
         return builder;
     }

@@ -19,8 +19,8 @@ namespace OpenTelemetry.Instrumentation.ElasticsearchClient.Implementation;
 
 internal class ElasticsearchRequestPipelineDiagnosticListener : ListenerHandler
 {
-    internal const string DatabaseSystemName = "elasticsearch";
-    internal const string ExceptionCustomPropertyName = "OTel.Elasticsearch.Exception";
+    internal const string DatabaseSystemName = "opensearch";
+    internal const string ExceptionCustomPropertyName = "OTel.OpenSearch.Exception";
     internal const string AttributeDbMethod = "db.method";
 
     internal static readonly Assembly Assembly = typeof(ElasticsearchRequestPipelineDiagnosticListener).Assembly;
@@ -41,7 +41,7 @@ internal class ElasticsearchRequestPipelineDiagnosticListener : ListenerHandler
     private readonly MultiTypePropertyFetcher<byte[]> responseBodyFetcher = new MultiTypePropertyFetcher<byte[]>("ResponseBodyInBytes");
 
     public ElasticsearchRequestPipelineDiagnosticListener(ElasticsearchClientInstrumentationOptions options)
-        : base("Elasticsearch.Net.RequestPipeline")
+        : base("OpenSearch.Net.RequestPipeline")
     {
         this.options = options;
     }
@@ -52,10 +52,10 @@ internal class ElasticsearchRequestPipelineDiagnosticListener : ListenerHandler
         Guard.ThrowIfNull(activity);
         switch (name)
         {
-            case "CallElasticsearch.Start":
+            case "CallOpenSearch.Start":
                 this.OnStartActivity(activity, payload);
                 break;
-            case "CallElasticsearch.Stop":
+            case "CallOpenSearch.Stop":
                 this.OnStopActivity(activity, payload);
                 break;
         }
@@ -66,10 +66,10 @@ internal class ElasticsearchRequestPipelineDiagnosticListener : ListenerHandler
         switch (activity.OperationName)
         {
             case "Ping":
-                return "Elasticsearch Ping";
-            case "CallElasticsearch" when method != null:
+                return "OpenSearch clientPing";
+            case "CallOpenSearch" when method != null:
                 {
-                    var methodName = MethodNameCache.GetOrAdd(method, $"Elasticsearch {method}");
+                    var methodName = MethodNameCache.GetOrAdd(method, $"OpenSearch client{method}");
                     if (elasticType == null)
                     {
                         return methodName;
@@ -79,7 +79,7 @@ internal class ElasticsearchRequestPipelineDiagnosticListener : ListenerHandler
                 }
 
             default:
-                return "Elasticsearch";
+                return "OpenSearch";
         }
     }
 

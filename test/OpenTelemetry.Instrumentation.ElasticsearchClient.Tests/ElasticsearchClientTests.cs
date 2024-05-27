@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
-using Nest;
+using OpenSearch.Net;
+using OpenSearch.Client;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Tests;
 using OpenTelemetry.Trace;
@@ -32,7 +32,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -59,13 +59,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch GET customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientGET customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -84,7 +84,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection(null, statusCode: 404)).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection(null, statusCode: 404)).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -111,13 +111,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch GET customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientGET customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -136,7 +136,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -162,13 +162,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -216,7 +216,7 @@ public class ElasticsearchClientTests
                 endCalled++;
             };
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(sampler)
@@ -276,7 +276,7 @@ public class ElasticsearchClientTests
                 endCalled++;
             };
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(sampler)
@@ -336,7 +336,7 @@ public class ElasticsearchClientTests
                 endCalled++;
             };
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnectionWithDownstreamActivity()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(sampler)
@@ -367,7 +367,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -393,13 +393,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -418,7 +418,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -444,12 +444,12 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST customer", searchActivity.DisplayName);
 
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -484,7 +484,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -510,13 +510,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -535,7 +535,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer,order"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer,order"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -561,13 +561,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Null(searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -586,8 +586,8 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var connection = new InMemoryConnection(Encoding.UTF8.GetBytes("{}"), statusCode: 500, exception: new ElasticsearchClientException("Boom"));
-        var client = new ElasticClient(new ConnectionSettings(connection).DefaultIndex("customer").EnableDebugMode());
+        var connection = new InMemoryConnection(Encoding.UTF8.GetBytes("{}"), statusCode: 500, exception: new OpenSearchClientException("Boom"));
+        var client = new OpenSearchClient(new ConnectionSettings(connection).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -613,13 +613,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch POST customer", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientPOST customer", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Equal("customer", searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -639,7 +639,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer").EnableDebugMode());
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -665,13 +665,13 @@ public class ElasticsearchClientTests
         Assert.NotEqual(parent.SpanId, searchActivity.Context.SpanId);
         Assert.NotEqual(default, searchActivity.Context.SpanId);
 
-        Assert.Equal($"Elasticsearch GET", searchActivity.DisplayName);
+        Assert.Equal($"OpenSearch clientGET", searchActivity.DisplayName);
 
         var tags = searchActivity.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Assert.Equal("localhost", searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerName));
         Assert.Equal(9200, searchActivity.GetTagValue(SemanticConventions.AttributeNetPeerPort));
 
-        Assert.Equal("elasticsearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
+        Assert.Equal("opensearch", searchActivity.GetTagValue(SemanticConventions.AttributeDbSystem));
         Assert.Null(searchActivity.GetTagValue(SemanticConventions.AttributeDbName));
         var debugInfo = (string)searchActivity.GetTagValue(SemanticConventions.AttributeDbStatement);
         Assert.NotEmpty(debugInfo);
@@ -690,7 +690,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -728,7 +728,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new TestSampler() { SamplingAction = (samplingParameters) => new SamplingResult(samplingDecision) })
@@ -758,7 +758,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -791,7 +791,7 @@ public class ElasticsearchClientTests
 
         var parent = new Activity("parent").Start();
 
-        var client = new ElasticClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
+        var client = new OpenSearchClient(new ConnectionSettings(new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
                    .SetSampler(new AlwaysOnSampler())
@@ -824,7 +824,7 @@ public class ElasticsearchClientTests
 
         var sensitiveConnectionString = new Uri($"http://sensitiveUsername:sensitivePassword@localhost:9200");
 
-        var client = new ElasticClient(new ConnectionSettings(
+        var client = new OpenSearchClient(new ConnectionSettings(
             new SingleNodeConnectionPool(sensitiveConnectionString), new InMemoryConnection()).DefaultIndex("customer"));
 
         using (Sdk.CreateTracerProviderBuilder()
